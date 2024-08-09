@@ -38,7 +38,21 @@ router.route('/users')
 
 router.route('/users/:userId')
     .put((req, res) => {
-        res.send('PUT User ' + req.params.userId);
+        const userId = req.params.userId;
+        let userChanged = false;
+
+        dataUser.filter(user => {
+            if (user.id == userId) {
+                user.name = req.body.name;
+                userChanged = true;
+            }
+        })
+
+        if(!userChanged) {
+            res.status(404).send('Data not found');
+        } else {
+            res.status(200).send('Data successfully updated');
+        }
     })
 
     .delete((req, res) => {
