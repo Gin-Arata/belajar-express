@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    res.send('About Pages');
+    res.redirect('/users/1');
 });
 
 app.get('/users/:userId', (req, res) => {
