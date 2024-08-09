@@ -2,32 +2,41 @@ import express from 'express';
 
 const router = express.Router();
 
-router.route('/users/:userId')
+let dataUser = [
+    {
+        id: 1,
+        name: 'John Doe',
+    },
+    {
+        id: 2,
+        name: 'Jane Doe',
+    },
+];
+
+router.route('/users')
     .get((req, res) => {
-        const dataUser = [
-            {
-                id: 1,
-                name: 'John Doe',
-            },
-            {
-                id: 2,
-                name: 'Jane Doe',
-            },
-        ];
+        res.json(dataUser);
+        // const selectedData = dataUser.find(user => user.id === parseInt(req.params.userId));
 
-        const selectedData = dataUser.find(user => user.id === parseInt(req.params.userId));
-
-        if (!selectedData) {
-            res.status(404).send('404 - Data not found');
-        } else {
-            res.json(selectedData);
-        }
+        // if (!selectedData) {
+        //     res.status(404).send('404 - Data not found');
+        // } else {
+        //     res.json(selectedData);
+        // }
     })
 
     .post((req, res) => {
-        res.send('POST User ' + req.params.userId);
+        const userInput = dataUser.push(req.body)
+
+        if (userInput) {
+            res.status(200).send('Data successfully added to the object');
+        } else {
+            res.status(500).send('Data failed to add to the object');
+        }
     })
 
+
+router.route('/users/:userId')
     .put((req, res) => {
         res.send('PUT User ' + req.params.userId);
     })
@@ -36,5 +45,5 @@ router.route('/users/:userId')
         res.send('Delete User ' + req.params.userId);
     });
 
-    
+
 export default router;
