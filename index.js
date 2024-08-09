@@ -11,7 +11,20 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/users/:userId', (req, res) => {
-    res.send('GET User ' + req.params.userId);
+    const dataUser = [
+        {
+            id: 1,
+            name: 'John Doe',
+        },
+        {
+            id: 2,
+            name: 'Jane Doe',
+        },
+    ];
+
+    const selectedData = dataUser.find(user => user.id === parseInt(req.params.userId));
+
+    res.json(selectedData);
 });
 
 app.post('/users/:userId', (req, res) => {
