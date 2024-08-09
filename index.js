@@ -24,7 +24,11 @@ app.get('/users/:userId', (req, res) => {
 
     const selectedData = dataUser.find(user => user.id === parseInt(req.params.userId));
 
-    res.json(selectedData);
+    if(!selectedData) {
+        res.status(404).send('404 - Data not found');
+    } else {
+        res.json(selectedData);
+    }
 });
 
 app.post('/users/:userId', (req, res) => {
