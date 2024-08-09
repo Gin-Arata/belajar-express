@@ -48,7 +48,7 @@ router.route('/users/:userId')
             }
         })
 
-        if(!userChanged) {
+        if (!userChanged) {
             res.status(404).send('Data not found');
         } else {
             res.status(200).send('Data successfully updated');
@@ -56,7 +56,15 @@ router.route('/users/:userId')
     })
 
     .delete((req, res) => {
-        res.send('Delete User ' + req.params.userId);
+        const userId = req.params.userId;
+        const indexDeleted = dataUser.findIndex(user => user.id == userId);
+
+        if (indexDeleted == -1) {
+            res.status(404).send('Data not found');
+        } else {
+            dataUser.splice(indexDeleted, 1);
+            res.status(200).send('Data successfully deleted');
+        }
     });
 
 
